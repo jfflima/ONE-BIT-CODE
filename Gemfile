@@ -28,6 +28,9 @@ gem 'jbuilder', '~> 2.5'
 gem 'rails_admin'
 gem 'devise', '~> 4.3'
 gem 'cancancan', '~> 1.15.0'
+gem 'carrierwave'
+gem 'rails_admin_rollincode', '~> 1.0'
+gem 'rails_admin_rollincode', :git => 'https://github.com/jfflima/customtheme.git'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password

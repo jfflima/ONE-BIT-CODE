@@ -1,5 +1,42 @@
 RailsAdmin.config do |config|
 
+config.main_app_name = ["Representantes Comerciais", ""]
+config.navigation_static_links = {
+  'OneBitCode' => 'http://onebitcode.com'
+}
+
+config.navigation_static_label = "Lins Úteis"
+
+config.model Sale do
+    navigation_icon 'fa fa-money'
+end
+
+config.model Discount do
+  parent Product
+end
+
+config.model Sale do
+  parent User
+  weight -2
+end
+
+config.model Comission do
+  parent User
+  weight -1
+end
+
+config.model Client do
+  parent User
+end
+
+config.model ProductQuantity do
+  visible false
+end
+
+config.model Address do
+  visible false
+end
+
   ### Popular gems integration
 
   ## == Devise ==
@@ -9,7 +46,7 @@ RailsAdmin.config do |config|
    config.current_user_method(&:current_user)
 
   ## == Cancan ==
-   config.authorize_with :cancancan
+   config.authorize_with :cancan
 
   ## == Pundit ==
   # config.authorize_with :pundit
@@ -22,6 +59,123 @@ RailsAdmin.config do |config|
   ## == Gravatar integration ==
   ## To disable Gravatar integration in Navigation Bar set to false
   # config.show_gravatar = true
+
+
+  config.model Sale do
+    create do
+      field  :client
+      field  :sale_date
+      field  :discount
+      field  :notes
+      field  :product_quantities
+
+      field :user_id, :hidden do
+        default_value do
+          bindings[:view]._current_user.id
+        end
+      end
+    end
+
+    edit do
+      field  :client
+      field  :sale_date
+      field  :discount
+      field  :notes
+      field  :product_quantities
+
+      field :user_id, :hidden do
+        default_value do
+          bindings[:view]._current_user.id
+        end
+      end
+    end
+  end
+
+  config.model Client do
+    create do
+      field  :name
+      field  :company_name
+      field  :document
+      field  :email
+      field  :phone
+      field  :notes
+      field  :status
+      field  :address
+
+      field :user_id, :hidden do
+        default_value do
+          bindings[:view]._current_user.id
+        end
+      end
+    end
+
+    edit do
+      field  :name
+      field  :company_name
+      field  :document
+      field  :email
+      field  :phone
+      field  :notes
+      field  :status
+      field  :address
+
+
+      field :user_id, :hidden do
+        default_value do
+          bindings[:view]._current_user.id
+        end
+      end
+    end
+
+    list do
+      field  :name
+      field  :company_name
+      field  :document
+      field  :email
+      field  :phone
+      field  :notes
+      field  :status
+      field  :address
+
+    end
+  end
+
+  config.model ProductQuantity do
+    visible false
+  end
+
+  config.model Address do
+    visible false
+  end
+
+
+  config.model ProductQuantity do
+    edit do
+      field :product
+      field :quantity
+
+      field :user_id, :hidden do
+        default_value do
+          bindings[:view]._current_user.id
+        end
+      end
+    end
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   config.actions do
     dashboard                     # mandatory
